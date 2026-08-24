@@ -17,7 +17,9 @@ def register_exception_handlers(app: FastAPI) -> None:
     @app.exception_handler(HTTPException)
     async def http_exception_handler(_: Request, exc: HTTPException) -> JSONResponse:
         detail: Any = exc.detail
-        return JSONResponse(status_code=exc.status_code, content={"detail": detail})
+        return JSONResponse(
+            status_code=exc.status_code, content={"detail": detail}, headers=exc.headers
+        )
 
     @app.exception_handler(RequestValidationError)
     async def validation_exception_handler(

@@ -16,8 +16,8 @@ from app.db.mixins import TimestampMixin
 
 class UserRole(StrEnum):
     ADMIN = "admin"
+    FACULTY = "faculty"
     STAFF = "staff"
-    VIEWER = "viewer"
 
 
 class User(TimestampMixin, Base):

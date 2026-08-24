@@ -5,11 +5,12 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Query, Response, status
 from sqlalchemy.orm import Session
 
+from app.api.dependencies import get_current_user
 from app.db.session import get_db_session
 from app.schemas.faculty import FacultyCreate, FacultyListResponse, FacultyResponse, FacultyUpdate
 from app.services.faculty import FacultyService
 
-router = APIRouter(prefix="/faculty", tags=["faculty"])
+router = APIRouter(prefix="/faculty", tags=["faculty"], dependencies=[Depends(get_current_user)])
 service = FacultyService()
 
 

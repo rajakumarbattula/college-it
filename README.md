@@ -31,4 +31,14 @@ cd ../frontend
 npm run test -- --run
 ```
 
+## Bootstrap the first administrator
+
+After applying database migrations, create the initial administrator through the
+password-prompting CLI. Public registration is intentionally unavailable.
+
+```powershell
+cd backend
+uv run python -m app.cli.create_admin --email admin@college.example
+```
+
 See [docs/architecture.md](docs/architecture.md) for the initial architecture.
