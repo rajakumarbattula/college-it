@@ -49,3 +49,21 @@ docker compose exec backend uv run python -m app.cli.create_admin --email admin@
 ```
 
 See [docs/architecture.md](docs/architecture.md) for the initial architecture.
+
+## Kubernetes / OpenShift manifests
+
+Deployment templates are in `k8s/`. Before applying them, replace every image
+reference in the deployment files and every `REPLACE_WITH` value in
+`k8s/secrets.yaml` through your deployment secret manager. The frontend
+production image proxies `/api/` requests to the internal backend service, so
+the OpenShift Route exposes only the frontend.
+
+```powershell
+kubectl apply -f k8s/
+# Or, on OpenShift:
+oc apply -f k8s/
+```
+
+The included PostgreSQL StatefulSet is intended for development or learning
+environments. Use a managed PostgreSQL service or an operator-managed database
+with backups and high availability for production.

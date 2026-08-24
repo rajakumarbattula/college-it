@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: college-it-config
+  namespace: college-it
+data:
+  APP_NAME: College IT Management System
+  APP_ENV: production
+  API_V1_PREFIX: /api/v1
+  LOG_LEVEL: INFO
+  CORS_ORIGINS: ""
+  POSTGRES_DB: college_it
+  POSTGRES_USER: college_it
