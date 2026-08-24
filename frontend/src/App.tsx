@@ -6,6 +6,8 @@ import { AuthProvider } from "./features/auth/AuthContext";
 import { DashboardPage } from "./pages/DashboardPage";
 import { LoginPage } from "./pages/LoginPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { StudentFormPage } from "./pages/StudentFormPage";
+import { StudentsListPage } from "./pages/StudentsListPage";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 
 export function App() {
@@ -18,6 +20,9 @@ export function App() {
             <Route element={<ProtectedRoute />}>
               <Route element={<AppLayout />}>
                 <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/students" element={<StudentsListPage />} />
+                <Route path="/students/new" element={<StudentFormPage />} />
+                <Route path="/students/:studentId/edit" element={<StudentFormPage />} />
               </Route>
             </Route>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
