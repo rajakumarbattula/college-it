@@ -6,6 +6,7 @@ from app.schemas.department import (
     DepartmentResponse,
     DepartmentUpdate,
 )
+from app.schemas.faculty import FacultyCreate, FacultyListResponse, FacultyResponse, FacultyUpdate
 from app.schemas.student import StudentCreate, StudentListResponse, StudentResponse, StudentUpdate
 
 __all__ = [
@@ -13,6 +14,10 @@ __all__ = [
     "DepartmentListResponse",
     "DepartmentResponse",
     "DepartmentUpdate",
+    "FacultyCreate",
+    "FacultyListResponse",
+    "FacultyResponse",
+    "FacultyUpdate",
     "StudentCreate",
     "StudentListResponse",
     "StudentResponse",
