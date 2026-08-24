@@ -22,10 +22,6 @@ student_status = sa.Enum("active", "inactive", "graduated", name="student_status
 
 
 def upgrade() -> None:
-    bind = op.get_bind()
-    user_role.create(bind, checkfirst=True)
-    student_status.create(bind, checkfirst=True)
-
     op.create_table(
         "users",
         sa.Column("id", sa.Uuid(), nullable=False),
@@ -143,7 +139,3 @@ def downgrade() -> None:
     op.drop_table("students")
     op.drop_table("departments")
     op.drop_table("users")
-
-    bind = op.get_bind()
-    student_status.drop(bind, checkfirst=True)
-    user_role.drop(bind, checkfirst=True)

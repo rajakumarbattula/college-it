@@ -1,6 +1,6 @@
 # College IT Management System
 
-A learning-focused College IT Management System designed with a production-ready path. Phase 1 provides the React/FastAPI/PostgreSQL project foundation only; domain functionality is not implemented yet.
+A learning-focused College IT Management System with a React frontend, FastAPI backend, and PostgreSQL database.
 
 ## Prerequisites
 
@@ -9,7 +9,7 @@ A learning-focused College IT Management System designed with a production-ready
 
 ## Local configuration
 
-Copy `.env.example` to `.env` and replace the placeholder secrets before running the stack.
+Copy `.env.example` to `.env` and replace every placeholder password and JWT secret. Docker Compose deliberately refuses to start without the required database and JWT settings.
 
 ## Run with Docker
 
@@ -17,9 +17,17 @@ Copy `.env.example` to `.env` and replace the placeholder secrets before running
 docker compose up --build
 ```
 
+The backend waits for PostgreSQL, applies Alembic migrations, and then starts the API. The frontend waits for the backend health check.
+
 - Frontend: `http://localhost:5173`
 - Backend health check: `http://localhost:8000/health`
 - Backend API documentation: `http://localhost:8000/docs`
+
+Stop the stack with:
+
+```powershell
+docker compose down
+```
 
 ## Run tests
 
@@ -37,8 +45,7 @@ After applying database migrations, create the initial administrator through the
 password-prompting CLI. Public registration is intentionally unavailable.
 
 ```powershell
-cd backend
-uv run python -m app.cli.create_admin --email admin@college.example
+docker compose exec backend uv run python -m app.cli.create_admin --email admin@college.example
 ```
 
 See [docs/architecture.md](docs/architecture.md) for the initial architecture.
