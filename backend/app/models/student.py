@@ -30,7 +30,11 @@ class Student(TimestampMixin, Base):
     last_name: Mapped[str] = mapped_column(String(100), nullable=False)
     email: Mapped[str] = mapped_column(String(320), nullable=False, unique=True)
     status: Mapped[StudentStatus] = mapped_column(
-        Enum(StudentStatus, name="student_status"),
+        Enum(
+            StudentStatus,
+            name="student_status",
+            values_callable=lambda enum_class: [member.value for member in enum_class],
+        ),
         nullable=False,
         server_default=StudentStatus.ACTIVE.value,
     )
