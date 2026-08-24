@@ -4,6 +4,8 @@ import { AppLayout } from "./components/AppLayout";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { AuthProvider } from "./features/auth/AuthContext";
 import { DashboardPage } from "./pages/DashboardPage";
+import { FacultyFormPage } from "./pages/FacultyFormPage";
+import { FacultyListPage } from "./pages/FacultyListPage";
 import { LoginPage } from "./pages/LoginPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { StudentFormPage } from "./pages/StudentFormPage";
@@ -23,6 +25,9 @@ export function App() {
                 <Route path="/students" element={<StudentsListPage />} />
                 <Route path="/students/new" element={<StudentFormPage />} />
                 <Route path="/students/:studentId/edit" element={<StudentFormPage />} />
+                <Route path="/faculty" element={<FacultyListPage />} />
+                <Route path="/faculty/new" element={<FacultyFormPage />} />
+                <Route path="/faculty/:facultyId/edit" element={<FacultyFormPage />} />
               </Route>
             </Route>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />

@@ -2,7 +2,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../features/auth/useAuth";
 
-const managementItems = ["Faculty", "Departments"];
+const managementItems = ["Departments"];
 
 export function AppLayout() {
   const navigate = useNavigate();
@@ -26,6 +26,9 @@ export function AppLayout() {
           <p className="nav-section-label">Management</p>
           <NavLink to="/students" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
             Students
+          </NavLink>
+          <NavLink to="/faculty" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+            Faculty
           </NavLink>
           {managementItems.map((item) => (
             <span className="nav-link disabled" key={item} aria-disabled="true">
