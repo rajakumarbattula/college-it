@@ -59,6 +59,19 @@ def test_create_student_validates_payload_and_department(client: TestClient) -> 
     assert missing_department_response.json()["detail"] == "Department not found"
 
 
+def test_create_student_rejects_an_inactive_department(
+    client: TestClient, db_session: Session
+) -> None:
+    department = create_department(db_session)
+    department.active = False
+    db_session.commit()
+
+    response = client.post("/api/v1/students", json=student_payload(department.id))
+
+    assert response.status_code == 422
+    assert response.json()["detail"] == "Department is inactive"
+
+
 def test_create_student_rejects_duplicate_identifiers(
     client: TestClient, db_session: Session
 ) -> None:

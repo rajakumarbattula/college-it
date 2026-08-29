@@ -7,7 +7,7 @@ from sqlalchemy import exists, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.models.department import Department
+from app.models.department import CourseCategory, Department
 from app.models.faculty import Faculty
 from app.models.student import Student
 from app.repositories.department import DepartmentRepository
@@ -36,9 +36,17 @@ class DepartmentService:
         return department
 
     def list(
-        self, session: Session, *, page: int, page_size: int, search: str | None
+        self,
+        session: Session,
+        *,
+        page: int,
+        page_size: int,
+        search: str | None,
+        category: CourseCategory | None,
     ) -> tuple[list[Department], int]:
-        return self.repository.list(session, page=page, page_size=page_size, search=search)
+        return self.repository.list(
+            session, page=page, page_size=page_size, search=search, category=category
+        )
 
     def replace(
         self, session: Session, department_id: UUID, department_data: DepartmentUpdate

@@ -67,9 +67,14 @@ class FacultyService:
 
     @staticmethod
     def _ensure_department_exists(session: Session, department_id: UUID) -> None:
-        if session.get(Department, department_id) is None:
+        department = session.get(Department, department_id)
+        if department is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, detail="Department not found"
+            )
+        if not department.active:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail="Department is inactive"
             )
 
     @staticmethod

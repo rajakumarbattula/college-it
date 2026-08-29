@@ -50,7 +50,7 @@ export function StudentForm({ initialValues, departments, isSubmitting, onSubmit
         <FormField label="Department" error={errors.department_id}>
           <select value={values.department_id} onChange={(event) => updateValue("department_id", event.target.value)}>
             <option value="">Select a department</option>
-            {departments.map((department) => <option key={department.id} value={department.id}>{department.code} — {department.name}</option>)}
+            {departments.filter((department) => department.active).map((department) => <option key={department.id} value={department.id}>{department.code} — {department.name}</option>)}
           </select>
         </FormField>
         <FormField label="Status" error={errors.status}>

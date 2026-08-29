@@ -12,7 +12,9 @@ def department_payload(**overrides: object) -> dict[str, object]:
     payload: dict[str, object] = {
         "code": "CSE",
         "name": "Computer Science",
+        "category": "VOCATIONAL",
         "description": "Computing and software engineering.",
+        "active": True,
     }
     payload.update(overrides)
     return payload
@@ -33,6 +35,8 @@ def test_create_department(client: TestClient) -> None:
     body = response.json()
     assert body["code"] == "CSE"
     assert body["name"] == "Computer Science"
+    assert body["category"] == "VOCATIONAL"
+    assert body["active"] is True
     assert UUID(body["id"])
 
 
@@ -46,19 +50,23 @@ def test_create_department_validates_and_rejects_duplicates(client: TestClient) 
 
 
 def test_list_departments_paginates_and_searches(client: TestClient, db_session: Session) -> None:
-    create_department(db_session, code="CSE", name="Computer Science")
-    create_department(db_session, code="ECE", name="Electronics")
-    create_department(db_session, code="ME", name="Mechanical Engineering")
+    create_department(db_session, code="CSE", name="Computer Science", category="VOCATIONAL")
+    create_department(db_session, code="ECE", name="Electronics", category="VOCATIONAL")
+    create_department(db_session, code="ME", name="Mechanical Engineering", category="REGULAR")
 
     paginated_response = client.get("/api/v1/departments?page=2&page_size=1")
     name_response = client.get("/api/v1/departments?search=elect")
     code_response = client.get("/api/v1/departments?search=me")
+    vocational_response = client.get("/api/v1/departments?category=VOCATIONAL")
+    regular_response = client.get("/api/v1/departments?category=REGULAR")
 
     assert paginated_response.status_code == 200
     assert paginated_response.json()["total"] == 3
     assert len(paginated_response.json()["items"]) == 1
     assert [item["code"] for item in name_response.json()["items"]] == ["ECE"]
     assert [item["code"] for item in code_response.json()["items"]] == ["ME"]
+    assert [item["code"] for item in vocational_response.json()["items"]] == ["CSE", "ECE"]
+    assert [item["code"] for item in regular_response.json()["items"]] == ["ME"]
 
 
 def test_get_department_and_handle_missing_department(
@@ -79,12 +87,15 @@ def test_replace_department(client: TestClient, db_session: Session) -> None:
 
     response = client.put(
         f"/api/v1/departments/{department.id}",
-        json=department_payload(code="ECE", name="Electronics and Communication", description=None),
+        json=department_payload(
+            code="ECE", name="Electronics and Communication", description=None, active=False
+        ),
     )
 
     assert response.status_code == 200
     assert response.json()["code"] == "ECE"
     assert response.json()["description"] is None
+    assert response.json()["active"] is False
 
 
 def test_delete_department_and_prevent_deleting_referenced_department(

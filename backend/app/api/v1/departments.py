@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 
 from app.api.dependencies import require_roles
 from app.db.session import get_db_session
+from app.models.department import CourseCategory
 from app.models.user import UserRole
 from app.schemas.department import (
     DepartmentCreate,
@@ -36,9 +37,12 @@ def list_departments(
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=20, ge=1, le=100),
     search: str | None = Query(default=None, min_length=1, max_length=150),
+    category: CourseCategory | None = Query(default=None),
     session: Session = Depends(get_db_session),
 ) -> DepartmentListResponse:
-    departments, total = service.list(session, page=page, page_size=page_size, search=search)
+    departments, total = service.list(
+        session, page=page, page_size=page_size, search=search, category=category
+    )
     return DepartmentListResponse(items=departments, page=page, page_size=page_size, total=total)
 
 

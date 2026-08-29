@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { FacultyForm } from "./FacultyForm";
 
-const department = { id: "department-1", code: "CSE", name: "Computer Science", description: null };
+const department = { id: "department-1", code: "CS", name: "Computer Science", category: "VOCATIONAL" as const, description: null, active: true };
 
 describe("FacultyForm", () => {
   it("shows client-side validation errors before submitting", () => {

@@ -5,7 +5,7 @@ from uuid import UUID
 from sqlalchemy import Select, func, or_, select
 from sqlalchemy.orm import Session
 
-from app.models.department import Department
+from app.models.department import CourseCategory, Department
 
 
 class DepartmentRepository:
@@ -15,7 +15,13 @@ class DepartmentRepository:
         return session.get(Department, department_id)
 
     def list(
-        self, session: Session, *, page: int, page_size: int, search: str | None = None
+        self,
+        session: Session,
+        *,
+        page: int,
+        page_size: int,
+        search: str | None = None,
+        category: CourseCategory | None = None,
     ) -> tuple[list[Department], int]:
         statement: Select[tuple[Department]] = select(Department)
         if search:
@@ -23,6 +29,8 @@ class DepartmentRepository:
             statement = statement.where(
                 or_(Department.code.ilike(pattern), Department.name.ilike(pattern))
             )
+        if category is not None:
+            statement = statement.where(Department.category == category)
 
         total = session.scalar(select(func.count()).select_from(statement.subquery())) or 0
         departments = session.scalars(

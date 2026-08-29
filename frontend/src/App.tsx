@@ -4,6 +4,7 @@ import { AppLayout } from "./components/AppLayout";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { AuthProvider } from "./features/auth/AuthContext";
 import { DashboardPage } from "./pages/DashboardPage";
+import { DepartmentsPage } from "./pages/DepartmentsPage";
 import { FacultyFormPage } from "./pages/FacultyFormPage";
 import { FacultyListPage } from "./pages/FacultyListPage";
 import { LoginPage } from "./pages/LoginPage";
@@ -24,6 +25,7 @@ export function App() {
             <Route element={<ProtectedRoute />}>
               <Route element={<AppLayout />}>
                 <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/departments" element={<DepartmentsPage />} />
                 <Route path="/students" element={<StudentsListPage />} />
                 <Route path="/students/new" element={<StudentFormPage />} />
                 <Route path="/students/:studentId/edit" element={<StudentFormPage />} />

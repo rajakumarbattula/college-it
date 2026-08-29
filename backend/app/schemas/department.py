@@ -4,6 +4,8 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.models.department import CourseCategory
+
 
 class DepartmentAttributes(BaseModel):
     """Fields shared by department write requests."""
@@ -18,9 +20,15 @@ class DepartmentAttributes(BaseModel):
 class DepartmentCreate(DepartmentAttributes):
     """Payload for creating a department."""
 
+    category: CourseCategory
+    active: bool = True
+
 
 class DepartmentUpdate(DepartmentAttributes):
     """Payload for fully replacing a department."""
+
+    category: CourseCategory
+    active: bool
 
 
 class DepartmentResponse(DepartmentAttributes):
@@ -29,6 +37,8 @@ class DepartmentResponse(DepartmentAttributes):
     model_config = ConfigDict(from_attributes=True)
 
     id: UUID
+    category: CourseCategory
+    active: bool
 
 
 class DepartmentListResponse(BaseModel):
