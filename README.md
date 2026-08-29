@@ -41,6 +41,33 @@ cd ../frontend
 npm run test -- --run
 ```
 
+## Run end-to-end tests
+
+Start the local stack and seed fictional dashboard data first. The suite uses
+real browser workflows and requires a pre-created local administrator account.
+Set these values only in your uncommitted `.env` file:
+
+```text
+E2E_BASE_URL=http://localhost:5173
+E2E_ADMIN_EMAIL=your-local-admin-email
+E2E_ADMIN_PASSWORD=your-local-admin-password
+E2E_PUBLIC_PASSWORD=a-separate-local-test-password
+```
+
+Install Chromium once, then run either mode:
+
+```powershell
+cd frontend
+npx playwright install chromium
+npm run test:e2e
+npm run test:e2e:headed
+```
+
+The suite uses generated fictional data and removes the dashboard records and
+official student records it creates. Public accounts cannot yet be removed via
+the UI or API, so each registration test account is intentionally retained and
+uses a unique `example.invalid` address.
+
 ## Bootstrap the first administrator
 
 After applying database migrations, create the initial administrator through the
