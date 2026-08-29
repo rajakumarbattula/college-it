@@ -11,6 +11,7 @@ from app.db.base import Base
 from app.db.mixins import TimestampMixin
 
 if TYPE_CHECKING:
+    from app.models.achievement import StudentAchievement
     from app.models.department import Department
 
 
@@ -43,3 +44,4 @@ class Student(TimestampMixin, Base):
     )
 
     department: Mapped["Department"] = relationship(back_populates="students")
+    achievements: Mapped[list["StudentAchievement"]] = relationship(back_populates="student")

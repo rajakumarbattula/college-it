@@ -30,7 +30,16 @@ def test_department_relationships_link_students_and_faculty() -> None:
 
 
 def test_models_define_expected_tables_constraints_and_indexes() -> None:
-    assert set(Base.metadata.tables) == {"users", "departments", "students", "faculty"}
+    assert set(Base.metadata.tables) == {
+        "users",
+        "departments",
+        "students",
+        "faculty",
+        "events",
+        "student_achievements",
+        "notifications",
+        "gallery_photos",
+    }
     assert {column.name for column in User.__table__.primary_key.columns} == {"id"}
     student_foreign_key = next(iter(Student.__table__.foreign_keys))
     faculty_foreign_key = next(iter(Faculty.__table__.foreign_keys))
