@@ -33,7 +33,7 @@ describe("App", () => {
     fireEvent.click(screen.getByRole("button", { name: "Sign in" }));
 
     await waitFor(() => {
-      expect(screen.getByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: /Science Wing Junior College/i })).toBeInTheDocument();
     });
   });
 
