@@ -5,6 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.security import create_access_token, hash_password, verify_password
+from app.models.student import Student
 from app.models.user import User, UserRole
 
 
@@ -38,8 +39,8 @@ def registration_payload(**overrides: object) -> dict[str, object]:
     return payload
 
 
-def test_public_registration_creates_a_student_account(
-    unauthenticated_client: TestClient,
+def test_public_registration_creates_an_account_but_not_an_enrolled_student(
+    unauthenticated_client: TestClient, db_session: Session
 ) -> None:
     response = unauthenticated_client.post("/api/v1/auth/register", json=registration_payload())
 
@@ -48,6 +49,10 @@ def test_public_registration_creates_a_student_account(
         "full_name": "Asha Reddy",
         "email": "asha.reddy@college.example",
     }
+    enrolled_student = db_session.scalar(
+        select(Student).where(Student.email == "asha.reddy@college.example")
+    )
+    assert enrolled_student is None
 
 
 def test_public_registration_rejects_duplicate_and_invalid_payloads(

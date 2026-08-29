@@ -29,6 +29,7 @@ h2 { margin-top: 0; }
 .form-error { margin: .5rem 0; padding: .7rem; border-radius: .4rem; color: #9e1b1b; background: #fff0f0; }
 .form-success { margin: .5rem 0; padding: .7rem; border-radius: .4rem; color: #176b45; background: #e3f8ed; }
 .auth-link { margin: .5rem 0 0; color: #5c6b7d; text-align: center; }
+.registration-note { margin: .2rem 0 .5rem; padding: .65rem; border-left: .25rem solid #176b72; color: #315d5a; background: #e8f3f1; font-size: .9rem; line-height: 1.45; }
 .auth-link a { color: #1769aa; font-weight: 700; }
 .course-list { display: grid; gap: .6rem; margin: 0; padding-left: 1.25rem; }
 .loading-state { display: inline-flex; align-items: center; gap: .6rem; color: #526b87; }

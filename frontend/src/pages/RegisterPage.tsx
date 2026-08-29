@@ -51,9 +51,10 @@ export function RegisterPage() {
     <main className="login-page">
       <form className="login-card" onSubmit={handleSubmit} noValidate>
         <p className="eyebrow">College IT Management System</p>
-        <h1>Create student account</h1>
+        <h1>Create an online account</h1>
         <p className="muted">Register with your name, email address, and a secure password.</p>
-        {isRegistered ? <p className="form-success" role="status">Registration successful. Redirecting to login...</p> : null}
+        <p className="registration-note">Online account registration does not by itself confirm admission or enrollment.</p>
+        {isRegistered ? <p className="form-success" role="status">Registration successful. Please sign in.</p> : null}
         {error ? <p className="form-error" role="alert">{error}</p> : null}
         <label htmlFor="full-name">Full name</label>
         <input

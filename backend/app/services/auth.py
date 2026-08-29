@@ -31,7 +31,7 @@ class AuthService:
         return create_access_token(user)
 
     def register(self, session: Session, registration: RegistrationRequest) -> User:
-        """Create a public account with the fixed least-privileged role."""
+        """Create a public account with no linked official enrollment record."""
         user = User(
             full_name=registration.full_name,
             email=registration.email,

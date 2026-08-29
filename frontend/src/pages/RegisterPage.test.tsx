@@ -25,8 +25,9 @@ describe("RegisterPage", () => {
   it("renders the registration form and login link", () => {
     renderPage();
 
-    expect(screen.getByRole("heading", { name: "Create student account" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Create an online account" })).toBeInTheDocument();
     expect(screen.getByLabelText("Full name")).toBeInTheDocument();
+    expect(screen.getByText("Online account registration does not by itself confirm admission or enrollment.")).toBeInTheDocument();
     expect(screen.getByText("Already have an account?")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Login" })).toHaveAttribute("href", "/login");
   });
@@ -66,7 +67,7 @@ describe("RegisterPage", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Register" }));
 
-    expect(await screen.findByRole("status")).toHaveTextContent("Registration successful");
+    expect(await screen.findByRole("status")).toHaveTextContent("Registration successful. Please sign in.");
     expect(fetchMock).toHaveBeenCalledWith(
       expect.stringContaining("/auth/register"),
       expect.objectContaining({

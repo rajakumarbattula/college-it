@@ -18,7 +18,7 @@ class LoginRequest(BaseModel):
 
 
 class RegistrationRequest(BaseModel):
-    """Public registration payload for a least-privileged student account."""
+    """Public registration payload for an account, not student enrollment."""
 
     model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
 
