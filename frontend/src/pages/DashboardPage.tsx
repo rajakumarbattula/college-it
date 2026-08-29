@@ -63,7 +63,7 @@ export function DashboardPage() {
         <div>
           <p className="eyebrow hero-eyebrow">Welcome to the college community</p>
           <h1>Science Wing Junior College <span>Karimnagar</span></h1>
-          <p className="college-affiliation">Board of Intermediate Education, Hyderabad</p>
+          <p className="college-affiliation">Affiliated to Board of Intermediate Education, Hyderabad</p>
         </div>
         <div className="hero-pattern" aria-hidden="true" />
       </header>

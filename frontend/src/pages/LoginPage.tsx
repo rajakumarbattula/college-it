@@ -31,9 +31,10 @@ export function LoginPage() {
   return (
     <main className="login-page">
       <form className="login-card" onSubmit={handleSubmit}>
-        <p className="eyebrow">College IT Management System</p>
+        <p className="eyebrow">Science Wing Junior College</p>
+        <p className="auth-location">Karimnagar</p>
         <h1>Sign in</h1>
-        <p className="muted">Sign in to access College IT Management System.</p>
+        <p className="muted">Affiliated to Board of Intermediate Education, Hyderabad</p>
         {error ? <p className="form-error" role="alert">{error}</p> : null}
         <label htmlFor="email">Email</label>
         <input

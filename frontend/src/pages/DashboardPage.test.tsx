@@ -29,7 +29,7 @@ describe("DashboardPage", () => {
 
     expect(await screen.findByText("Science Fair Award")).toBeInTheDocument();
     expect(screen.getByText("120")).toBeInTheDocument();
-    expect(screen.getByText("Board of Intermediate Education, Hyderabad")).toBeInTheDocument();
+    expect(screen.getByText("Affiliated to Board of Intermediate Education, Hyderabad")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Vocational Courses" })).toBeInTheDocument();
     expect(screen.getByText("Computer Science")).toBeInTheDocument();
     expect(screen.getByText("Science Exhibition").compareDocumentPosition(screen.getByText("Cultural Day")) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();

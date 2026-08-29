@@ -50,8 +50,10 @@ export function RegisterPage() {
   return (
     <main className="login-page">
       <form className="login-card" onSubmit={handleSubmit} noValidate>
-        <p className="eyebrow">College IT Management System</p>
+        <p className="eyebrow">Science Wing Junior College</p>
+        <p className="auth-location">Karimnagar</p>
         <h1>Create an online account</h1>
+        <p className="muted">Affiliated to Board of Intermediate Education, Hyderabad</p>
         <p className="muted">Register with your name, email address, and a secure password.</p>
         <p className="registration-note">Online account registration does not by itself confirm admission or enrollment.</p>
         {isRegistered ? <p className="form-success" role="status">Registration successful. Please sign in.</p> : null}

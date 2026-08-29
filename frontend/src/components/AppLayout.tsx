@@ -15,8 +15,10 @@ export function AppLayout() {
   return (
     <div className="app-shell">
       <aside className="sidebar" aria-label="Primary navigation">
-        <a className="brand" href="/dashboard">
-          College IT
+        <a className="brand" href="/dashboard" aria-label="Science Wing Junior College dashboard">
+          <span className="brand-name">Science Wing Junior College</span>
+          <span className="brand-location">Karimnagar</span>
+          <span className="brand-affiliation">Affiliated to Board of Intermediate Education, Hyderabad</span>
         </a>
         <nav>
           <NavLink to="/dashboard" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
@@ -40,6 +42,7 @@ export function AppLayout() {
       </aside>
       <section className="app-content">
         <Outlet />
+        <footer className="app-footer">Science Wing Junior College, Karimnagar</footer>
       </section>
     </div>
   );
