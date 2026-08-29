@@ -4,7 +4,8 @@ import { useAuth } from "../features/auth/useAuth";
 
 export function AppLayout() {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, role } = useAuth();
+  const canManageDashboard = role === "ADMIN" || role === "FACULTY" || role === "STAFF";
 
   function handleLogout() {
     logout();
@@ -31,6 +32,7 @@ export function AppLayout() {
           <NavLink to="/departments" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
             Courses
           </NavLink>
+          {canManageDashboard ? <><p className="nav-section-label">Administration</p><NavLink to="/admin/content" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>Dashboard content</NavLink></> : null}
         </nav>
         <button className="logout-button" type="button" onClick={handleLogout}>
           Sign out

@@ -13,6 +13,8 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { StudentFormPage } from "./pages/StudentFormPage";
 import { StudentsListPage } from "./pages/StudentsListPage";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
+import { ContentManagementRoute } from "./routes/ContentManagementRoute";
+import { DashboardContentAdminPage } from "./pages/DashboardContentAdminPage";
 
 export function App() {
   return (
@@ -32,6 +34,9 @@ export function App() {
                 <Route path="/faculty" element={<FacultyListPage />} />
                 <Route path="/faculty/new" element={<FacultyFormPage />} />
                 <Route path="/faculty/:facultyId/edit" element={<FacultyFormPage />} />
+                <Route element={<ContentManagementRoute />}>
+                  <Route path="/admin/content" element={<DashboardContentAdminPage />} />
+                </Route>
               </Route>
             </Route>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
