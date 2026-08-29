@@ -1,6 +1,8 @@
-# College IT Management System
+# Science Wing Junior College IT Management System
 
-A learning-focused College IT Management System with a React frontend, FastAPI backend, and PostgreSQL database.
+A learning-focused system for Science Wing Junior College, Karimnagar,
+affiliated to the Board of Intermediate Education, Hyderabad. It uses a React
+frontend, FastAPI backend, and PostgreSQL database.
 
 ## Prerequisites
 
@@ -48,10 +50,11 @@ password-prompting CLI.
 docker compose exec backend uv run python -m app.cli.create_admin --email admin@college.example
 ```
 
-## Public student registration
+## Public online account registration
 
-Visitors can create a least-privileged student account at `/register`. Public
-registration never accepts a role or other administrative fields. Only an
+Visitors can create a least-privileged `STUDENT` account at `/register`. Public
+registration never accepts a role or other administrative fields, and it does
+not create or confirm an official student enrollment record. Only an
 administrator can assign `ADMIN`, `STAFF`, or `FACULTY` roles.
 
 ## Development demo data

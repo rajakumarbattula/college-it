@@ -41,7 +41,8 @@ function getRole(token: string): UserRole | null {
     const payload = token.split(".")[1];
     if (!payload) return null;
     const decoded = JSON.parse(atob(payload.replace(/-/g, "+").replace(/_/g, "/"))) as { role?: string };
-    return ["ADMIN", "FACULTY", "STAFF", "STUDENT"].includes(decoded.role ?? "") ? decoded.role as UserRole : null;
+    const role = decoded.role?.toUpperCase();
+    return ["ADMIN", "FACULTY", "STAFF", "STUDENT"].includes(role ?? "") ? role as UserRole : null;
   } catch {
     return null;
   }
