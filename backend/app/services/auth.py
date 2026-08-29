@@ -1,11 +1,13 @@
 """Authentication service operations."""
 
 from fastapi import HTTPException, status
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.core.security import create_access_token, verify_password
+from app.core.security import create_access_token, hash_password, verify_password
+from app.models.user import User, UserRole
 from app.repositories.user import UserRepository
-from app.schemas.auth import LoginRequest
+from app.schemas.auth import LoginRequest, RegistrationRequest
 
 
 class AuthService:
@@ -27,3 +29,23 @@ class AuthService:
                 headers={"WWW-Authenticate": "Bearer"},
             )
         return create_access_token(user)
+
+    def register(self, session: Session, registration: RegistrationRequest) -> User:
+        """Create a public account with the fixed least-privileged role."""
+        user = User(
+            full_name=registration.full_name,
+            email=registration.email,
+            password_hash=hash_password(registration.password),
+            role=UserRole.STUDENT,
+        )
+        self.repository.add(session, user)
+        try:
+            session.commit()
+        except IntegrityError as error:
+            session.rollback()
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="A user with the same email already exists",
+            ) from error
+        session.refresh(user)
+        return user

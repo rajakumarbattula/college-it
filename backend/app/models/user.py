@@ -18,12 +18,14 @@ class UserRole(StrEnum):
     ADMIN = "admin"
     FACULTY = "faculty"
     STAFF = "staff"
+    STUDENT = "student"
 
 
 class User(TimestampMixin, Base):
     __tablename__ = "users"
 
     id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    full_name: Mapped[str | None] = mapped_column(String(200), nullable=True)
     email: Mapped[str] = mapped_column(String(320), nullable=False, unique=True)
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
     role: Mapped[UserRole] = mapped_column(

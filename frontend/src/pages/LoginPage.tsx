@@ -1,5 +1,5 @@
 import { type FormEvent, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { ApiError } from "../api/client";
 import { useAuth } from "../features/auth/useAuth";
@@ -33,7 +33,7 @@ export function LoginPage() {
       <form className="login-card" onSubmit={handleSubmit}>
         <p className="eyebrow">College IT Management System</p>
         <h1>Sign in</h1>
-        <p className="muted">Use an administrator-created account to continue.</p>
+        <p className="muted">Sign in to access College IT Management System.</p>
         {error ? <p className="form-error" role="alert">{error}</p> : null}
         <label htmlFor="email">Email</label>
         <input
@@ -58,6 +58,7 @@ export function LoginPage() {
         <button type="submit" disabled={isAuthenticating}>
           {isAuthenticating ? "Signing in..." : "Sign in"}
         </button>
+        <p className="auth-link">Don't have an account? <Link to="/register">Register</Link></p>
       </form>
     </main>
   );

@@ -5,8 +5,9 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Query, Response, status
 from sqlalchemy.orm import Session
 
-from app.api.dependencies import get_current_user
+from app.api.dependencies import require_roles
 from app.db.session import get_db_session
+from app.models.user import UserRole
 from app.schemas.department import (
     DepartmentCreate,
     DepartmentListResponse,
@@ -16,7 +17,9 @@ from app.schemas.department import (
 from app.services.department import DepartmentService
 
 router = APIRouter(
-    prefix="/departments", tags=["departments"], dependencies=[Depends(get_current_user)]
+    prefix="/departments",
+    tags=["departments"],
+    dependencies=[Depends(require_roles(UserRole.ADMIN, UserRole.FACULTY, UserRole.STAFF))],
 )
 service = DepartmentService()
 

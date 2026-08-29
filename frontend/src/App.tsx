@@ -8,6 +8,7 @@ import { FacultyFormPage } from "./pages/FacultyFormPage";
 import { FacultyListPage } from "./pages/FacultyListPage";
 import { LoginPage } from "./pages/LoginPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { RegisterPage } from "./pages/RegisterPage";
 import { StudentFormPage } from "./pages/StudentFormPage";
 import { StudentsListPage } from "./pages/StudentsListPage";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
@@ -19,6 +20,7 @@ export function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route element={<ProtectedRoute />}>
               <Route element={<AppLayout />}>
                 <Route path="/dashboard" element={<DashboardPage />} />

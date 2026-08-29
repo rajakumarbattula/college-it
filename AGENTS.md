@@ -2,9 +2,25 @@
 
 ## Project purpose
 
-Build a learning-focused College IT Management System with a maintainable architecture that can evolve into a production application. The initial MVP includes authentication, a dashboard, and CRUD management for students, faculty, and departments.
+Build a learning-focused College IT Management System for **Science Wing Junior College, Karimnagar**, affiliated with the **Board of Intermediate Education, Hyderabad**. Maintain an architecture that can evolve into a production application.
+
+The application includes public student registration, authentication, a dashboard, and CRUD management for students, faculty, and departments/courses.
 
 Do not add scope casually. Confirm requirements before implementing features outside the MVP.
+
+## Institution terminology and dashboard scope
+
+- Use **department** for the existing persistence model and API resource. A department represents a course offering in the institution's business terminology.
+- Every department/course belongs to one course category:
+  - `VOCATIONAL`
+  - `REGULAR`
+- Initial vocational courses:
+  - `CS` — Computer Science
+  - `EE` — Electronics and Electrical
+- Initial regular courses:
+  - `M.P.C`
+  - `Bi.P.C`
+- The dashboard must present student achievements, a cultural event gallery, upcoming events, notifications, and summary statistics. Statistics include total students, departments, faculty, and upcoming events.
 
 ## Technology stack
 
@@ -62,6 +78,13 @@ Keep responsibilities separated. API routes must not contain business logic or d
 - Use configuration through environment variables; never hard-code environment-specific values or secrets.
 - Use UTC for persisted timestamps.
 - Include `created_at` and `updated_at` fields on persistent business entities.
+- Validate all input at API boundaries and in client forms where applicable.
+- Enforce role-based authorization through centralized dependencies; never rely on frontend visibility for access control.
+- Never hard-code passwords and never commit secrets, credentials, tokens, or `.env` files to Git.
+- Add an Alembic migration for every database schema change.
+- Add or update deterministic tests for every new behavior.
+- Build accessible frontend UI with semantic elements, keyboard support, and clear field-level errors.
+- Keep dashboard layouts responsive across mobile, tablet, and desktop viewports.
 - Keep comments focused on non-obvious decisions, constraints, or trade-offs.
 - Update documentation when architectural behavior, setup, or public APIs change.
 
@@ -74,6 +97,8 @@ Keep responsibilities separated. API routes must not contain business logic or d
 - Use service classes/functions for business rules and repositories for persistence operations.
 - Validate input with Pydantic and return consistent HTTP error responses.
 - Hash passwords with Argon2 or bcrypt. Never store or log plaintext passwords.
+- Public registration must never accept a role, activation state, or other privileged fields from the client. It creates the `STUDENT` role as the project's safest default role.
+- Only an authorized administrator may create, assign, or modify privileged `ADMIN`, `STAFF`, and `FACULTY` roles.
 - Generate and apply Alembic migrations for every schema change; do not modify database schemas manually.
 - Use UUID primary keys unless a later documented decision changes this.
 
@@ -92,9 +117,10 @@ Keep responsibilities separated. API routes must not contain business logic or d
 ## Database conventions
 
 - PostgreSQL is the system of record.
-- Initial entities: `users`, `departments`, `students`, and `faculty`.
+- Initial entities: `users`, `departments`, `students`, and `faculty`; dashboard content may add achievements, events, event photos, and notifications.
 - A student belongs to one department; a faculty member belongs to one department.
 - Enforce uniqueness for user email, department code/name, student number/email, and faculty employee number/email.
+- Persist a validated course category for each department/course. Do not infer or silently reclassify existing department records during migrations.
 - Use foreign keys and indexes for relationship and commonly-filtered fields.
 - Do not delete a department while students or faculty reference it without an explicit reassignment/deletion policy.
 - Use Alembic migrations as the sole schema-change mechanism.
@@ -111,8 +137,8 @@ Keep responsibilities separated. API routes must not contain business logic or d
 ## Security requirements
 
 - Treat student and faculty data as sensitive.
-- Require authentication for all application endpoints except health checks and login.
-- Enforce authorization centrally with role-aware dependencies; start with an `admin` role and expand deliberately.
+- Require authentication for all application endpoints except health checks, login, and public student registration.
+- Enforce authorization centrally with role-aware dependencies. `STUDENT` is the least-privileged role; `ADMIN`, `STAFF`, and `FACULTY` are privileged roles and must not be self-assigned.
 - Keep JWT signing keys, database URLs, and credentials in secrets or environment variables only.
 - Use short-lived access tokens. For refresh tokens, prefer Secure, HttpOnly, SameSite cookies.
 - Configure CORS to permit only known frontend origins per environment.
@@ -145,6 +171,8 @@ Keep responsibilities separated. API routes must not contain business logic or d
 - Do not create application code, dependencies, or infrastructure files until explicitly requested.
 - Preserve the layered backend architecture and feature-based frontend architecture.
 - Add migrations and tests with database or behavior changes.
+- Preserve the public-registration safety boundary: clients may register only as `STUDENT`; privileged roles are administrator-managed.
+- Keep dashboard content and statistics in dedicated feature modules and use responsive, accessible UI components.
 - Update `.env.example`, documentation, and Docker configuration when configuration requirements change.
 - Flag ambiguous domain decisions rather than silently inventing irreversible behavior.
 - Avoid destructive Git and filesystem commands unless explicitly authorized.

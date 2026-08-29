@@ -48,6 +48,12 @@ password-prompting CLI. Public registration is intentionally unavailable.
 docker compose exec backend uv run python -m app.cli.create_admin --email admin@college.example
 ```
 
+## Public student registration
+
+Visitors can create a least-privileged student account at `/register`. Public
+registration never accepts a role or other administrative fields. Only an
+administrator can assign `ADMIN`, `STAFF`, or `FACULTY` roles.
+
 See [docs/architecture.md](docs/architecture.md) for the initial architecture.
 
 ## Kubernetes / OpenShift manifests

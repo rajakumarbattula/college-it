@@ -1,6 +1,7 @@
 from uuid import UUID
 
 from fastapi.testclient import TestClient
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.security import create_access_token, hash_password, verify_password
@@ -25,6 +26,94 @@ def create_user(
     session.commit()
     session.refresh(user)
     return user
+
+
+def registration_payload(**overrides: object) -> dict[str, object]:
+    payload: dict[str, object] = {
+        "full_name": "Asha Reddy",
+        "email": "asha.reddy@college.example",
+        "password": "SecurePassword123!",
+    }
+    payload.update(overrides)
+    return payload
+
+
+def test_public_registration_creates_a_student_account(
+    unauthenticated_client: TestClient,
+) -> None:
+    response = unauthenticated_client.post("/api/v1/auth/register", json=registration_payload())
+
+    assert response.status_code == 201
+    assert response.json() == {
+        "full_name": "Asha Reddy",
+        "email": "asha.reddy@college.example",
+    }
+
+
+def test_public_registration_rejects_duplicate_and_invalid_payloads(
+    unauthenticated_client: TestClient,
+) -> None:
+    first_response = unauthenticated_client.post(
+        "/api/v1/auth/register", json=registration_payload()
+    )
+    duplicate_response = unauthenticated_client.post(
+        "/api/v1/auth/register", json=registration_payload()
+    )
+    invalid_email_response = unauthenticated_client.post(
+        "/api/v1/auth/register", json=registration_payload(email="not-an-email")
+    )
+    weak_password_response = unauthenticated_client.post(
+        "/api/v1/auth/register", json=registration_payload(password="short")
+    )
+    missing_name_response = unauthenticated_client.post(
+        "/api/v1/auth/register",
+        json={"email": "missing@college.example", "password": "SecurePassword123!"},
+    )
+
+    assert first_response.status_code == 201
+    assert duplicate_response.status_code == 409
+    assert duplicate_response.json()["detail"] == "A user with the same email already exists"
+    assert invalid_email_response.status_code == 422
+    assert weak_password_response.status_code == 422
+    assert missing_name_response.status_code == 422
+
+
+def test_public_registration_rejects_privileged_role_and_hashes_password(
+    unauthenticated_client: TestClient, db_session: Session
+) -> None:
+    privileged_role_response = unauthenticated_client.post(
+        "/api/v1/auth/register", json=registration_payload(role="admin")
+    )
+    registration_response = unauthenticated_client.post(
+        "/api/v1/auth/register",
+        json=registration_payload(email="hash.registration@college.example"),
+    )
+    user = db_session.scalar(select(User).where(User.email == "hash.registration@college.example"))
+
+    assert privileged_role_response.status_code == 422
+    assert registration_response.status_code == 201
+    assert user is not None
+    assert user.role is UserRole.STUDENT
+    assert user.password_hash != "SecurePassword123!"
+    assert verify_password("SecurePassword123!", user.password_hash)
+
+
+def test_registered_student_cannot_access_management_resources(
+    unauthenticated_client: TestClient,
+) -> None:
+    unauthenticated_client.post("/api/v1/auth/register", json=registration_payload())
+    login_response = unauthenticated_client.post(
+        "/api/v1/auth/login",
+        json={"email": "asha.reddy@college.example", "password": "SecurePassword123!"},
+    )
+
+    response = unauthenticated_client.get(
+        "/api/v1/students",
+        headers={"Authorization": f"Bearer {login_response.json()['access_token']}"},
+    )
+
+    assert login_response.status_code == 200
+    assert response.status_code == 403
 
 
 def test_login_returns_a_bearer_token(
