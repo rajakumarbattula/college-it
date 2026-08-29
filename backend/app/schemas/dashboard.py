@@ -1,16 +1,29 @@
 """Pydantic schemas for dashboard content and aggregation."""
 
 from datetime import date, datetime
+from urllib.parse import urlparse
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field, HttpUrl, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from app.models.achievement import AchievementCategory
 from app.models.event import EventType
 from app.models.notification import NotificationPriority
 
 
-class AchievementAttributes(BaseModel):
+class ImageReferenceAttributes(BaseModel):
+    @field_validator("image_url", check_fields=False)
+    @classmethod
+    def validate_image_url(cls, value: str | None) -> str | None:
+        if value is None or value.startswith("/"):
+            return value
+        parsed = urlparse(value)
+        if parsed.scheme in {"http", "https"} and parsed.netloc:
+            return value
+        raise ValueError("Image URL must be an HTTP(S) URL or a local absolute path")
+
+
+class AchievementAttributes(ImageReferenceAttributes):
     model_config = ConfigDict(str_strip_whitespace=True)
 
     student_id: UUID | None = None
@@ -19,7 +32,7 @@ class AchievementAttributes(BaseModel):
     description: str = Field(min_length=1, max_length=5_000)
     category: AchievementCategory
     achievement_date: date
-    image_url: HttpUrl | None = None
+    image_url: str | None = Field(default=None, max_length=2_048)
     featured: bool = False
 
 
@@ -38,7 +51,7 @@ class AchievementResponse(AchievementAttributes):
     created_at: datetime
 
 
-class EventAttributes(BaseModel):
+class EventAttributes(ImageReferenceAttributes):
     model_config = ConfigDict(str_strip_whitespace=True)
 
     title: str = Field(min_length=1, max_length=200)
@@ -46,7 +59,7 @@ class EventAttributes(BaseModel):
     event_date: datetime
     location: str = Field(min_length=1, max_length=200)
     event_type: EventType
-    image_url: HttpUrl | None = None
+    image_url: str | None = Field(default=None, max_length=2_048)
     featured: bool = False
 
 
@@ -97,12 +110,12 @@ class NotificationResponse(NotificationAttributes):
     created_at: datetime
 
 
-class GalleryAttributes(BaseModel):
+class GalleryAttributes(ImageReferenceAttributes):
     model_config = ConfigDict(str_strip_whitespace=True)
 
     event_id: UUID | None = None
     caption: str = Field(min_length=1, max_length=300)
-    image_url: HttpUrl
+    image_url: str = Field(min_length=1, max_length=2_048)
     display_order: int = Field(default=0, ge=0)
     featured: bool = False
 

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Coding challenge placeholder</title>
+  <desc id="desc">Generic illustration of programming brackets.</desc>
+  <rect width="1200" height="675" fill="#102a43"/>
+  <text x="600" y="405" fill="#68d391" font-family="monospace" font-size="250" font-weight="700" text-anchor="middle">&lt;/&gt;</text>
+  <text x="600" y="120" fill="white" font-family="Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle">Coding Challenge</text>
+  <text x="600" y="590" fill="#b7e4c7" font-family="Arial, sans-serif" font-size="32" text-anchor="middle">Technical competition demo artwork</text>
+</svg>

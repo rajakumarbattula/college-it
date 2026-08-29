@@ -42,7 +42,7 @@ npm run test -- --run
 ## Bootstrap the first administrator
 
 After applying database migrations, create the initial administrator through the
-password-prompting CLI. Public registration is intentionally unavailable.
+password-prompting CLI.
 
 ```powershell
 docker compose exec backend uv run python -m app.cli.create_admin --email admin@college.example
@@ -53,6 +53,26 @@ docker compose exec backend uv run python -m app.cli.create_admin --email admin@
 Visitors can create a least-privileged student account at `/register`. Public
 registration never accepts a role or other administrative fields. Only an
 administrator can assign `ADMIN`, `STAFF`, or `FACULTY` roles.
+
+## Development demo data
+
+After migrations have created the course and dashboard tables, seed the
+fictional development dataset with:
+
+```powershell
+cd backend
+uv run python -m app.scripts.seed_demo_data
+```
+
+For a running Docker Compose stack:
+
+```powershell
+docker compose exec backend uv run python -m app.scripts.seed_demo_data
+```
+
+The command is idempotent for its fixed sample records, creates no credentials,
+and refuses to run when `APP_ENV` is `production` or `prod`. Gallery images use
+local generic SVG assets under `frontend/public/demo-assets/`.
 
 See [docs/architecture.md](docs/architecture.md) for the initial architecture.
 

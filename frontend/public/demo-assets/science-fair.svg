@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Science fair placeholder</title>
+  <desc id="desc">Generic illustration of a laboratory flask.</desc>
+  <rect width="1200" height="675" fill="#1b6b5a"/>
+  <path d="M510 155h180v155l115 205c31 56-9 100-73 100H468c-64 0-104-44-73-100l115-205V155z" fill="#d6f5ea"/>
+  <path d="M470 490h260l-55-105H525z" fill="#59c3c3"/>
+  <circle cx="550" cy="445" r="22" fill="#f9d65c"/><circle cx="650" cy="515" r="18" fill="#f9d65c"/>
+  <text x="600" y="95" fill="white" font-family="Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle">Science Fair</text>
+  <text x="600" y="650" fill="#d6f5ea" font-family="Arial, sans-serif" font-size="30" text-anchor="middle">Fictional student project showcase</text>
+</svg>

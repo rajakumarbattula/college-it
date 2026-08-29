@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Cultural day placeholder</title>
+  <desc id="desc">Generic celebratory streamers illustration.</desc>
+  <rect width="1200" height="675" fill="#8c2f5f"/>
+  <path d="M80 130c160 80 180 230 350 290M1120 130c-160 80-180 230-350 290" fill="none" stroke="#f7d45c" stroke-width="45"/>
+  <path d="M170 550l85-180 85 180zM945 550l85-180 85 180z" fill="#65c3ba"/>
+  <circle cx="600" cy="350" r="115" fill="#f6c85f"/>
+  <text x="600" y="125" fill="white" font-family="Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle">Cultural Day</text>
+  <text x="600" y="610" fill="#fae5ef" font-family="Arial, sans-serif" font-size="30" text-anchor="middle">College community celebration</text>
+</svg>

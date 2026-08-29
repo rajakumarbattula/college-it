@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Academic achievement placeholder</title>
+  <desc id="desc">Generic illustration of an academic award.</desc>
+  <rect width="1200" height="675" fill="#173f5f"/>
+  <circle cx="600" cy="305" r="150" fill="#f6c85f"/>
+  <path d="M510 430l-55 150 145-75 145 75-55-150" fill="#e45756"/>
+  <text x="600" y="130" fill="white" font-family="Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle">Academic Excellence</text>
+  <text x="600" y="640" fill="#dceaf7" font-family="Arial, sans-serif" font-size="30" text-anchor="middle">Science Wing Junior College</text>
+</svg>

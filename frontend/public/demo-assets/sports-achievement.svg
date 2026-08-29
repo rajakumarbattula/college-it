@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Sports achievement placeholder</title>
+  <desc id="desc">Generic illustration of a winning medal.</desc>
+  <rect width="1200" height="675" fill="#503a8c"/>
+  <path d="M465 130h120l55 210-100 50zM735 130H615l-55 210 100 50z" fill="#f5a65b"/>
+  <circle cx="600" cy="430" r="150" fill="#f7d45c"/>
+  <text x="600" y="465" fill="#503a8c" font-family="Arial, sans-serif" font-size="150" font-weight="700" text-anchor="middle">1</text>
+  <text x="600" y="95" fill="white" font-family="Arial, sans-serif" font-size="54" font-weight="700" text-anchor="middle">Sports Achievement</text>
+</svg>
